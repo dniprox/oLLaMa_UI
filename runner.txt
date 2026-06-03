@@ -1,0 +1,2 @@
+
+CUDA_VISIBLE_DEVICES="" OLLAMA_ORIGINS="*" ollama serve

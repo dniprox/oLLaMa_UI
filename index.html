@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Simple WebUI</title>
+    <link rel="stylesheet" href="github-dark.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="marked.min.js"></script>
+    <script src="highlight.min.js"></script>
+</head>
+<body>
+    <div id="sidebar">
+         <div class="sidebar-header">
+              <div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                       <h3 style="margin:0">Моделі</h3>
+                       <button onclick="loadModels()" class="btn-icon">🔄</button>
+                  </div>
+                  <div style="display: flex; gap: 5px;">
+                       <button onclick="setSort('name')" id="sort-name" class="sort-btn active">A-Z</button>
+                       <button onclick="setSort('size')" id="sort-size" class="sort-btn">Size</button>
+                  </div>
+             </div>
+         </div>
+         <div id="model-list"></div>
+         <div class="sidebar-settings">
+              <label>API URL:</label>
+              <input type="text" id="api-url" value="http://localhost:11434">
+              <select id="api-type">
+                      <option value="ollama">Ollama</option>
+                      <option value="openai">OpenAI/LM Studio</option>
+              </select>
+              <div class="sidebar-footer" style="padding: 15px; border-top: 1px solid #444;">
+                  <button onclick="toggleTheme()" class="model-btn" style="text-align: center;">
+                          <span id="theme-icon">🌙</span> Змінити тему
+                  </button>
+              </div>
+         </div>
+    </div>
+
+    <div id="main-content">
+        <div id="top-bar">
+             <div id="active-info">
+                  <div id="status-tag">Status: Ready</div>
+             </div>
+
+             <div class="top-settings">
+                 <label>Контекст:</label>
+                 <input type="number" id="ctx-size" value="4096">
+                 <label><input type="checkbox" id="force-cpu"> CPU Only</label>
+                 <!-- Нова кнопка зупинки -->
+                 <button id="stop-btn" class="btn-red" style="display:none; padding: 5px 15px;">Зупинити ⏹</button>
+                 <button onclick="clearHistory()" class="btn-icon" title="Очистити чат">🗑️</button>
+             </div>
+        </div>
+
+        <div id="chat-window"></div>
+
+        <div id="input-area-container">
+            <div id="preview-container">
+                 <img id="preview-img" src="">
+                 <button onclick="clearImage()" class="btn-red">×</button>
+            </div>
+            <div id="input-row-wrapper">
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                <button onclick="document.getElementById('file-input').click()" class="btn-action" title="Додати фото">🖼️</button>
+                <input type="text" id="user-input" placeholder="Напишіть запит..." autocomplete="off">
+                <button id="send-btn" class="btn-send">Надіслати</button>
+            </div>
+            <div style="font-size: 11px; text-align: center; color: #999; margin-top: 10px;">
+                Ollama може помилятися. Перевіряйте важливу інформацію.
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

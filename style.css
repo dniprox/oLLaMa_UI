@@ -1,0 +1,315 @@
+body { display: flex; height: 100vh; overflow: hidden; }
+
+/* Ліва панель */
+#sidebar {
+    width: 260px;
+    background: #202123;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #444;
+}
+.sidebar-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; }
+#model-list { flex: 1; overflow-y: auto; padding: 10px; }
+.model-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    background: transparent;
+    color: #ececf1;
+    border: 1px solid #4d4d4f;
+    border-radius: 5px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+.model-btn:hover { background: #2b2c2f; }
+.model-btn.active { background: #343541; border-color: #007bff; }
+.model-btn.loaded { border-left: 4px solid #28a745; }
+
+/* Основна частина */
+#main-content { flex: 1; display: flex; flex-direction: column; background: white; }
+#top-barZZZZ { padding: 10px 20px; border-bottom: 1px solid #ddd; display: flex; gap: 20px; align-items: center; background: #f9f9f9; }
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    z-index: 100;
+}
+
+.top-settings { display: flex; align-items: center; gap: 15px; font-size: 13px; }
+
+
+#chat-window { flex: 1; overflow-y: auto; padding: 40px 15% 100px 15%; /* Робимо вузьку колонку тексту як в ChatGPT */ background: white; }
+
+/* Поле вводу знизу по центру */
+#input-area-container {
+    position: absolute; bottom: 0; left: 260px; right: 0;
+    padding: 20px 15%; background: linear-gradient(transparent, white 20%);
+}
+#input-area {
+    display: flex; gap: 10px; padding: 10px;
+    border: 1px solid #ddd; border-radius: 12px;
+    background: white; box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* Контейнер внизу екрана */
+#input-area-container {
+    position: fixed;
+    bottom: 0;
+    left: 260px; /* Ширина вашого Sidebar */
+    right: 0;
+    padding: 20px 15%; /* Відступи, щоб поле було по центру */
+    background: linear-gradient(transparent, white 30%);
+}
+
+/* Обгортка поля вводу */
+#input-row-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Поле вводу тексту */
+#user-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 8px 0;
+    background: transparent;
+}
+
+/* Кнопка "Надіслати" */
+.btn-send {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-send:hover {
+    background: #0056b3;
+}
+
+.btn-send:active {
+    transform: scale(0.95);
+}
+
+.btn-send:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Кнопка іконки (🖼️) */
+.btn-action {
+    background: #f0f0f0;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.btn-action:hover {
+    background: #e0e0e0;
+}
+
+/* Прев'ю картинки над полем вводу */
+#preview-container {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(240, 240, 240, 0.9);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+#preview-img {
+    height: 60px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Вікно чату */
+#chat-window {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 15% 150px 15%; /* Великий відступ знизу для поля вводу */
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Збільшена відстань між повідомленнями */
+}
+
+/* Спільні стилі для повідомлень */
+.message {
+    padding: 16px 20px;
+    border-radius: 18px;
+    max-width: 85%;
+    line-height: 1.6;
+    font-size: 15px;
+    position: relative;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Ваші повідомлення (User) */
+.user-message {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 4px; /* Гострий кутик знизу справа */
+}
+
+/* Повідомлення моделі (Bot) */
+.bot-message {
+    align-self: flex-start;
+    background-color: #f7f7f8;
+    color: #374151;
+    border: 1px solid #e5e5e5;
+    border-bottom-left-radius: 4px; /* Гострий кутик знизу зліва */
+}
+
+/* Назва моделі над повідомленням */
+.model-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6e6e80;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Стилі для роздумів <think> всередині бота */
+think {
+    display: block;
+    margin: 12px 0;
+    padding: 12px 16px;
+    background: #ececf1;
+    border-left: 3px solid #10a37f;
+    color: #565869;
+    font-style: italic;
+    font-size: 0.9em;
+    border-radius: 6px;
+}
+
+/* Зображення у повідомленнях */
+.msg-img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: block;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Рендеринг Markdown (списки, параграфи) */
+.message div p { margin: 0 0 10px 0; }
+.message div p:last-child { margin-bottom: 0; }
+
+.message ul, .message ol {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+/* Код у повідомленнях */
+.code-wrapper { margin: 15px 0; }
+pre {
+    margin: 0 !important;
+    border-radius: 12px !important;
+}
+
+
+
+.sidebar-settings { padding: 15px; border-top: 1px solid #444; font-size: 11px; }
+.sidebar-settings input, .sidebar-settings select {
+    width: 100%; background: #333; color: #fff; border: 1px solid #555; margin-top: 5px; padding: 4px;
+}
+/* Щоб скрол був плавний */
+#chat-window { scroll-behavior: smooth; }
+
+/* Світла тема (за замовчуванням) */
+:root {
+    --bg: #ffffff;
+    --sidebar-bg: #f9f9f9;
+    --sidebar-text: #202123;
+    --chat-bg: #ffffff;
+    --text-color: #374151;
+    --bot-msg-bg: #f7f7f8;
+    --border-color: #e5e5e5;
+    --input-bg: #ffffff;
+}
+
+/* Темна тема */
+.dark-mode {
+    --bg: #343541;
+    --sidebar-bg: #202123;
+    --sidebar-text: #ececf1;
+    --chat-bg: #343541;
+    --text-color: #ececf1;
+    --bot-msg-bg: #444654;
+    --border-color: #4d4d4f;
+    --input-bg: #40414f;
+}
+
+body { background: var(--bg); color: var(--text-color); transition: background 0.3s; }
+#sidebar { background: var(--sidebar-bg); color: var(--sidebar-text); }
+#main-content { background: var(--chat-bg); }
+#chat-window { background: var(--chat-bg); }
+.bot-message { background: var(--bot-msg-bg); color: var(--text-color); border-color: var(--border-color); }
+#input-row-wrapper { background: var(--input-bg); border-color: var(--border-color); color: var(--text-color); }
+#user-input { color: var(--text-color); }
+#top-bar { background: var(--chat-bg); border-color: var(--border-color); color: var(--text-color); }
+.model-btn { color: var(--sidebar-text); border-color: var(--border-color); }
+
+
+.btn-red {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-red:hover {
+    background: #a71d2a;
+}
+
+.sort-btn {
+    flex: 1;
+    font-size: 10px;
+    background: #333;
+    color: #999;
+    border: 1px solid #444;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+.sort-btn.active {
+    color: white;
+    background: #007bff;
+    border-color: #007bff;
+}
+.sort-btn:hover:not(.active) {
+    background: #444;
+}
